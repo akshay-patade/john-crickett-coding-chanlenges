@@ -1,23 +1,42 @@
 #!/bin/bash
 
 function calculate_bytes(){
-    echo "logic to calculate bytes";
+
+    local file_name="test.txt"
+    local byte_count=0;
+
+    while IFS='' read -r line;
+    do
+        echo "${line}";
+    done < $file_name
+    echo "logic to calculate bytes";    
 }
 
 function calculate_number_of_lines(){
 
     local file_name="test.txt"
     local line_count=0;
-    while read -r line;
+    while  read -r line;
     do
         line_count=$(( line_count + 1 ));
     done < $file_name
 
-    echo "Number of lines in ${file_name}: ${line_count}"
+    echo "${line_count} ${file_name}"
 }
 
 function calculate_number_of_words(){
-    echo "logic to calculate number of words";
+    local file_name="test.txt";
+    local word_count=0;
+    local -a words;
+
+    while read -r line;
+    do
+        read -r -a words <<< $line;
+        echo "${#words[@]}";
+        (( word_count=word_count + ${#words[@]} ))
+    done < $file_name
+
+    echo "${word_count} ${file_name}";
 }
 
 flag=${1}
