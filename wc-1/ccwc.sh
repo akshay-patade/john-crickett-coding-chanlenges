@@ -39,6 +39,17 @@ function calculate_number_of_words(){
     echo "${word_count} ${file_name}";
 }
 
+function calculate_number_of_characters(){
+    local file_name="test.txt";
+    local char_count=0;
+
+    while read line; do
+        (( char_count += "${#line}" + 1)) # +1 is added because of the new line character \n
+    done < $file_name
+
+   echo "${char_count} ${file_name}"; 
+}
+
 flag=${1}
 
 case $flag in
@@ -46,5 +57,6 @@ case $flag in
     "-c")calculate_bytes;;
     "-l")calculate_number_of_lines;;
     "-w")calculate_number_of_words;;
+    "-m")calculate_number_of_characters;;
     *)echo "command not found";;
 esac
